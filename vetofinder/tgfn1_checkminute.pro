@@ -21,8 +21,9 @@ pro tgfn1_checkminute, minute, return_val
 	IF particle_rate ne 0 THEN BEGIN
 		IF particle_rate eq 1 THEN particle_rate = 0
 		return_val = particle_rate
-		IF particle_rate eq 2 THEN tgfn_log, 1, anytim(minute, /ccsds) + ' - MINUTE DROPPED: High particle rate'	
-		return
+		IF particle_rate eq 2 THEN tgfn_log, 1, anytim(minute, /ccsds) + ' - MINUTE DROPPED: High particle rate'
+                veto, anytim(minute,/ccsds)+'!'+string(-1)+'!'+ 'high particle rate'
+                return
 	ENDIF
 
 ; Make an eventlist, load data in interval and 100ms on either side. This is rears only, that's the a2d_index_mask bit.
@@ -33,17 +34,22 @@ pro tgfn1_checkminute, minute, return_val
 ; Check several ways to see if we got no data, then check for bad data gathering a gap.
 	IF size(d, /type) NE 8 THEN BEGIN
 		return_val = 4
+                veto,anytim(minute,/ccsds)+'!'+string(-1)+'!'+ 'no data 1'
 	ENDIF ELSE IF n_tags(d) EQ 0 THEN BEGIN
 		return_val = 4
+                veto,anytim(minute,/ccsds)+'!'+string(-1)+'!'+ 'no data 2'
 	ENDIF ELSE BEGIN
 		wh = where(d.time ge 0, nwh)
-		IF nwh eq 0 THEN return_val = 4
+		IF nwh eq 0 THEN begin
+                    return_val = 4
+                    veto,anytim(minute,/ccsds)+'!'+string(-1)+'!'+'no data 3'
+        ENDIF
 	ENDELSE
 
 	IF return_val eq 4 THEN BEGIN
 		return_val = 0 ;come back to this!
 		tgfn_log, 1, anytim(minute, /ccsds) + ' - MINUTE DROPPED: Bad data'
-		return
+                return
 	ENDIF
 	d = d[wh]
 
@@ -61,22 +67,21 @@ pro tgfn1_checkminute, minute, return_val
 ; Clock corrections
 	tfine = d.time/(1024.d)^2.
 	realtime_all = anytim(s.ut_ref)+tfine
-        
-;within first second: where(realtime_all ge minute and realtime_all lt
-;minute+1.d
-;similarly for the last second.
 
 ; Drop low energy events (items in channels <= 100)
+
 ; Alex: moved threschans to config, and bumped it up to 150 ~ 50 keV
 ; Alex: Also, we won't put a threshold on the low_voltage rear
 ; channels (18-27). 
 
     whall = where (d.channel gt cfg_threshchans[d.a2d_index],nall)
+
         
     IF nall eq 0 THEN BEGIN
-    return_val = 4
-    tgfn_log, 1, '' + anytim(minute, /ccsds) + ' - MINUTE DROPPED: All events in channels <= 100.'
-	return
+       return_val = 4
+       tgfn_log, 1, '' + anytim(minute, /ccsds) + ' - MINUTE DROPPED: All events in channels <= 100.'
+       veto,anytim(minute,/ccsds)+'!'+string(-1)+'!'+ 'threschans veto'
+       return
 	ENDIF
 
 	eventlist = realtime_all[whall] ; Actual times
@@ -90,7 +95,7 @@ pro tgfn1_checkminute, minute, return_val
 	FOR ii = 0, 14 DO BEGIN
 		wh = where(eventlist ge (m + ii*4. - 0.1) AND eventlist le (m + (ii+1)*4. + 0.1), n)
 		IF n eq 0 THEN continue
-
+		
 		evt = eventlist[wh]
 		det = detectorlist[wh]
 	

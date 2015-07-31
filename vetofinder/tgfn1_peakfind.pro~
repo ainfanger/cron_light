@@ -16,7 +16,15 @@ pro tgfn1_peakfind, minute, timescale_index, eventlist, detectorlist, offset = o
 	common triggers, trigger_structures
 	common poisson, poissontable
 
-	IF n_elements(eventlist) le 1 THEN return
+;'note the new begintime, instead of using minute!!!!! 07/22/2015 '
+	
+	begintime = string(anytim(eventlist(0),/ccsds))
+    endtime = string(anytim(eventlist(-1),/ccsds))
+
+	IF n_elements(eventlist) le 1 THEN BEGIN
+           veto, begintime+ '!' + string(timescale_index) + '!' + 'le 1 element in eventlist'
+           return
+        ENDIF
 
 	hist_binsize = cfg_timescales[timescale_index]*0.001d
 	IF n_elements(offset) eq 0 THEN hoffset = 0.0 ELSE hoffset = hist_binsize*0.5
@@ -25,30 +33,44 @@ pro tgfn1_peakfind, minute, timescale_index, eventlist, detectorlist, offset = o
 ; Create histogram.
 	hist = histogram(eventlist, min = min(eventlist) - hoffset, binsize = hist_binsize, locations = event_times)
 	ave = average(hist)
-	IF ave gt 500 THEN return
-
+	IF ave gt 500 THEN BEGIN
+           veto, begintime +'!' + string(timescale_index) + '!' +'BG too high'
+           return
+        ENDIF
 ; To avoid unreasonable differences in averages (i.e. saa) when peakfind is called several
 ; times, split histogram in two to get two averages and force second
 ; average to be within 20% of first average. 
 	split_ave1 = average(hist[0:n_elements(hist)/2])
 	split_ave2 = average(hist[n_elements(hist)/2:n_elements(hist)-1])
-	IF split_ave2 LE 0.80*split_ave1 OR split_ave2 GE 1.20*split_ave1 THEN return
+	IF split_ave2 LE 0.80*split_ave1 OR split_ave2 GE 1.20*split_ave1 THEN BEGIN
+           veto, begintime +'!' + string(timescale_index) + '!' +'SAA protection'
+           return
+        ENDIF
 
 ; Determine Poisson probabilities from lookup table. poissontable is indexed by:
 ;   [<250*bkg>, <# counts>]
 	ave_index = max([round(250*ave), 1])
 	probabilities = poissontable[ave_index, hist]
 	peaks = where(probabilities lt max_prob AND hist gt ave, num_peaks)
-
+    
+	print, ave
+	print, anytim(begintime,/ccsds)
+    if timescale_index eq 2 then stop
 ; Cycle through any items with a small probability.
 	FOR i = 0L, num_peaks-1 DO BEGIN
-
+        
+		event_time = event_times[peaks[i]] + hist_binsize*0.5 
+		;IF event_time lt minute THEN BEGIN
+        ;           veto, anytim(event_time,/ccsds)+ '!' + string(timescale_index) + '!' +'event_time lt minute'
+        ;           continue
+        ;ENDIF
 
 ; Determine the time of the TGF. Check that there are a realistic number of counts within +- 0.5s.
-		event_time = event_times[peaks[i]] + hist_binsize*0.5
-		IF event_time lt minute THEN continue
 		nearby = where(eventlist gt event_time-0.5d AND eventlist lt event_time+0.5d, n)
-		IF (n le 3 OR n ge 18000) THEN continue
+                IF (n le 3 OR n ge 18000) THEN BEGIN
+                   veto, anytim(event_time,/ccsds)+ '!' + string(timescale_ndex) + '!' +'n le 3 or n ge 18K'
+                   continue
+                ENDIF
 
 
 ; THIS IS WHERE WE CHECK WHETHER THERE ARE MANY COUNTS FROM ONE DETECTOR ALL IN A SHORT INTERVAL          
@@ -58,15 +80,22 @@ pro tgfn1_peakfind, minute, timescale_index, eventlist, detectorlist, offset = o
 		 
 ; Step through each detector in turn and see if it makes up > 1/3 of the counts. If it did, continue.
 		good = 1
+		conc=0
 		FOR j = 0, 8 DO BEGIN
 			IF good eq 0 THEN continue
 			with = where(detectors eq j + 9, nwith)
-			IF (1.*nwith)/(1.*in_burst) gt cfg1_concentration THEN good = 0
+			conc = (1.*nwith)/(1.*in_burst)
+			IF conc gt .43000d THEN good = 0
 		ENDFOR
-		IF good eq 0 THEN continue
 
+		IF good eq 0 THEN BEGIN
+                   veto, anytim(event_time,/ccsds)+ '!' + string(timescale_index) + '!' +'Concentration veto: ' + string(conc)
+                   continue
+                ENDIF
 
 ; Add to the structure of triggers
+		veto, anytim(event_time,/ccsds)+ '!' + string(timescale_index) + '!' +'Event found'
+		
 		new_evt = {stage1_struct}
 		new_evt.timestamp = anytim(event_time, /ccsds)
 		new_evt.timescale = timescale_index

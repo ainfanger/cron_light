@@ -1,0 +1,4 @@
+pro thereader
+  readcols, 'veto.out',vetos, format='A'
+  stop
+end

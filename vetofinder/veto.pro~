@@ -1,0 +1,6 @@
+pro veto, veto_msg
+  openw, 1, 'veto.out',/append
+  printf,1, veto_msg
+  close,1
+return
+end

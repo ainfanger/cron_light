@@ -1,0 +1,139 @@
+; TGFN1_CHECKMINUTE
+; Checks one minute for peaks.
+; - minute (IN): The anytim()-style timestamp for the start of the minute to check
+; - return_val (OUT): A flag for the array of minutes, detailing what happened in this minute:
+;       - 0: Minute hasn't been checked
+;       - 2: High particle rate (skipped)
+;       - 4: Bad data gathering.
+;       - 1: Minute has been checked.
+
+
+pro tgfn1_checkminute, minute, return_val
+
+
+; Load config file and restore common blcoks
+	@tgfn_config
+	common objects, obssum, obstref, o
+	return_val = 0
+
+; Check particle rate
+	particle_rate = tgfn1_particlerates(minute)
+	IF particle_rate ne 0 THEN BEGIN
+		IF particle_rate eq 1 THEN particle_rate = 0
+		return_val = particle_rate
+		IF particle_rate eq 2 THEN tgfn_log, 1, anytim(minute, /ccsds) + ' - MINUTE DROPPED: High particle rate'
+                veto, anytim(minute,/ccsds)+'!'+string(-1)+'!'+ 'high particle rate'
+                return
+	ENDIF
+
+; Make an eventlist, load data in interval and 100ms on either side. This is rears only, that's the a2d_index_mask bit.
+	d = o -> getdata(obs_time_interval = [minute - 0.1d, minute + 60.1d], $
+		time_unit = 1, time_range = [0,0], $
+		a2d_index_mask = cfg_a2d_index_mask)
+
+; Check several ways to see if we got no data, then check for bad data gathering a gap.
+	IF size(d, /type) NE 8 THEN BEGIN
+		return_val = 4
+                veto,anytim(minute,/ccsds)+'!'+string(-1)+'!'+ 'no data 1'
+	ENDIF ELSE IF n_tags(d) EQ 0 THEN BEGIN
+		return_val = 4
+                veto,anytim(minute,/ccsds)+'!'+string(-1)+'!'+ 'no data 2'
+	ENDIF ELSE BEGIN
+		wh = where(d.time ge 0, nwh)
+		IF nwh eq 0 THEN begin
+                    return_val = 4
+                    veto,anytim(minute,/ccsds)+'!'+string(-1)+'!'+'no data 3'
+        ENDIF
+	ENDELSE
+
+	IF return_val eq 4 THEN BEGIN
+		return_val = 0 ;come back to this!
+		tgfn_log, 1, anytim(minute, /ccsds) + ' - MINUTE DROPPED: Bad data'
+                return
+	ENDIF
+	d = d[wh]
+
+	;IF min(d.time) lt 0 THEN BEGIN
+	;	return_val = 4
+	;	return
+	;ENDIF
+	
+	s = o -> get()  
+
+; If G8 front is having transmitter noise (>25% of counts from G8), purge it *entirely*:
+;	g8f = where(d.a2d_index EQ 7, ng8f)
+;	IF float(ng8f)/float(n_elements(d)) gt 0.25 THEN d = d[where(d.a2d_index NE 7)]
+
+; Clock corrections
+	tfine = d.time/(1024.d)^2.
+	realtime_all = anytim(s.ut_ref)+tfine
+
+; Drop low energy events (items in channels <= 100)
+; Alex: moved threschans to config, and bumped it up to 150 ~ 50 keV
+; Alex: Also, we won't put a threshold on the low_voltage rear
+; channels (18-27). I know it does not look pretty, but
+; one must be careful with where commands. 
+
+        whall = where (d.a2d_index eq 0 and d.channel GT cfg_threshchans(0) or $
+                       d.a2d_index eq 1 and d.channel GT cfg_threshchans(1) or $
+                       d.a2d_index eq 2 and d.channel GT cfg_threshchans(2) or $
+                       d.a2d_index eq 3 and d.channel GT cfg_threshchans(3) or $
+                       d.a2d_index eq 4 and d.channel GT cfg_threshchans(4) or $
+                       d.a2d_index eq 5 and d.channel GT cfg_threshchans(5) or $
+                       d.a2d_index eq 6 and d.channel GT cfg_threshchans(6) or $
+                       d.a2d_index eq 7 and d.channel GT cfg_threshchans(7) or $
+                       d.a2d_index eq 8 and d.channel GT cfg_threshchans(8) or $
+                       d.a2d_index eq 9 and d.channel GT cfg_threshchans(9) or $
+                       d.a2d_index eq 10 and d.channel GT cfg_threshchans(10) or $
+                       d.a2d_index eq 11 and d.channel GT cfg_threshchans(11) or $
+                       d.a2d_index eq 12 and d.channel GT cfg_threshchans(12) or $
+                       d.a2d_index eq 13 and d.channel GT cfg_threshchans(13) or $
+                       d.a2d_index eq 14 and d.channel GT cfg_threshchans(14) or $
+                       d.a2d_index eq 15 and d.channel GT cfg_threshchans(15) or $
+                       d.a2d_index eq 16 and d.channel GT cfg_threshchans(16) or $
+                       d.a2d_index eq 17 and d.channel GT cfg_threshchans(17) or $
+                       d.a2d_index eq 18 and d.channel GT cfg_threshchans(18) or $
+                       d.a2d_index eq 19 and d.channel GT cfg_threshchans(19) or $
+                       d.a2d_index eq 20 and d.channel GT cfg_threshchans(20) or $
+                       d.a2d_index eq 21 and d.channel GT cfg_threshchans(21) or $
+                       d.a2d_index eq 22 and d.channel GT cfg_threshchans(22) or $
+                       d.a2d_index eq 23 and d.channel GT cfg_threshchans(23) or $
+                       d.a2d_index eq 24 and d.channel GT cfg_threshchans(24) or $
+                       d.a2d_index eq 25 and d.channel GT cfg_threshchans(25) or $
+                       d.a2d_index eq 26 and d.channel GT cfg_threshchans(26),nall)
+
+        
+        IF nall eq 0 THEN BEGIN
+		return_val = 4
+		tgfn_log, 1, '' + anytim(minute, /ccsds) + ' - MINUTE DROPPED: All events in channels <= 100.'
+		veto,anytim(minute,/ccsds)+'!'+string(-1)+'!'+ 'threschans veto'
+                return
+	ENDIF
+
+	eventlist = realtime_all[whall] ; Actual times
+	detectorlist = d[whall].a2d_index ; Detectors of items
+	uall = uniq(d[whall].time/4) ; Find unique ones
+	eventlist = eventlist[uall] ; Limit to uniques
+	detectorlist = detectorlist[uall] ; Limit to uniques
+
+	; Break minute up into fifteen 4s chunks
+	m = min(eventlist)
+	FOR ii = 0, 14 DO BEGIN
+		wh = where(eventlist ge (m + ii*4. - 0.1) AND eventlist le (m + (ii+1)*4. + 0.1), n)
+		IF n eq 0 THEN continue
+
+		evt = eventlist[wh]
+		det = detectorlist[wh]
+	
+		; Cycle through timescales and check for peaks
+		FOR i = 0, n_elements(cfg_timescales)-1 DO BEGIN
+
+			tgfn1_peakfind, minute, i, evt, det
+			tgfn1_peakfind, minute, i, evt, det, /offset
+
+		ENDFOR
+	ENDFOR
+
+	return_val = 1
+
+end

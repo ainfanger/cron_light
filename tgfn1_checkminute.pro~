@@ -61,22 +61,46 @@ pro tgfn1_checkminute, minute, return_val
 ; Clock corrections
 	tfine = d.time/(1024.d)^2.
 	realtime_all = anytim(s.ut_ref)+tfine
-        
-;within first second: where(realtime_all ge minute and realtime_all lt
-;minute+1.d
-;similarly for the last second.
 
 ; Drop low energy events (items in channels <= 100)
 ; Alex: moved threschans to config, and bumped it up to 150 ~ 50 keV
 ; Alex: Also, we won't put a threshold on the low_voltage rear
-; channels (18-27). 
+; channels (18-27). I know it does not look pretty, but
+; one must be careful with where commands. 
 
-    whall = where (d.channel gt cfg_threshchans[d.a2d_index],nall)
+        whall = where (d.a2d_index eq 0 and d.channel GT cfg_threshchans(0) or $
+                       d.a2d_index eq 1 and d.channel GT cfg_threshchans(1) or $
+                       d.a2d_index eq 2 and d.channel GT cfg_threshchans(2) or $
+                       d.a2d_index eq 3 and d.channel GT cfg_threshchans(3) or $
+                       d.a2d_index eq 4 and d.channel GT cfg_threshchans(4) or $
+                       d.a2d_index eq 5 and d.channel GT cfg_threshchans(5) or $
+                       d.a2d_index eq 6 and d.channel GT cfg_threshchans(6) or $
+                       d.a2d_index eq 7 and d.channel GT cfg_threshchans(7) or $
+                       d.a2d_index eq 8 and d.channel GT cfg_threshchans(8) or $
+                       d.a2d_index eq 9 and d.channel GT cfg_threshchans(9) or $
+                       d.a2d_index eq 10 and d.channel GT cfg_threshchans(10) or $
+                       d.a2d_index eq 11 and d.channel GT cfg_threshchans(11) or $
+                       d.a2d_index eq 12 and d.channel GT cfg_threshchans(12) or $
+                       d.a2d_index eq 13 and d.channel GT cfg_threshchans(13) or $
+                       d.a2d_index eq 14 and d.channel GT cfg_threshchans(14) or $
+                       d.a2d_index eq 15 and d.channel GT cfg_threshchans(15) or $
+                       d.a2d_index eq 16 and d.channel GT cfg_threshchans(16) or $
+                       d.a2d_index eq 17 and d.channel GT cfg_threshchans(17) or $
+                       d.a2d_index eq 18 and d.channel GT cfg_threshchans(18) or $
+                       d.a2d_index eq 19 and d.channel GT cfg_threshchans(19) or $
+                       d.a2d_index eq 20 and d.channel GT cfg_threshchans(20) or $
+                       d.a2d_index eq 21 and d.channel GT cfg_threshchans(21) or $
+                       d.a2d_index eq 22 and d.channel GT cfg_threshchans(22) or $
+                       d.a2d_index eq 23 and d.channel GT cfg_threshchans(23) or $
+                       d.a2d_index eq 24 and d.channel GT cfg_threshchans(24) or $
+                       d.a2d_index eq 25 and d.channel GT cfg_threshchans(25) or $
+                       d.a2d_index eq 26 and d.channel GT cfg_threshchans(26),nall)
+
         
-    IF nall eq 0 THEN BEGIN
-    return_val = 4
-    tgfn_log, 1, '' + anytim(minute, /ccsds) + ' - MINUTE DROPPED: All events in channels <= 100.'
-	return
+        IF nall eq 0 THEN BEGIN
+		return_val = 4
+		tgfn_log, 1, '' + anytim(minute, /ccsds) + ' - MINUTE DROPPED: All events in channels <= 100.'
+		return
 	ENDIF
 
 	eventlist = realtime_all[whall] ; Actual times
