@@ -67,6 +67,7 @@ pro tgfn1_checkminute, minute, return_val
 ;similarly for the last second.
 
 ; Drop low energy events (items in channels <= 100)
+
 ; Alex: moved threschans to config, and bumped it up to 150 ~ 50 keV
 ; Alex: Also, we won't put a threshold on the low_voltage rear
 ; channels (18-27). 
@@ -74,14 +75,14 @@ pro tgfn1_checkminute, minute, return_val
     whall = where (d.channel gt cfg_threshchans[d.a2d_index],nall)
         
     IF nall eq 0 THEN BEGIN
-    return_val = 4
-    tgfn_log, 1, '' + anytim(minute, /ccsds) + ' - MINUTE DROPPED: All events in channels <= 100.'
-	return
+       return_val = 4
+       tgfn_log, 1, '' + anytim(minute, /ccsds) + ' - MINUTE DROPPED: All events in channels <= 100.'
+	   return
 	ENDIF
 
 	eventlist = realtime_all[whall] ; Actual times
 	detectorlist = d[whall].a2d_index ; Detectors of items
-	uall = uniq(d[whall].time/4) ; Find unique ones
+	uall = uniq(d[whall].time/4,sort(d[whall].time/4)) ; Find unique ones (RHESSI binary microsecond sensitivity)
 	eventlist = eventlist[uall] ; Limit to uniques
 	detectorlist = detectorlist[uall] ; Limit to uniques
 

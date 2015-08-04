@@ -20,11 +20,11 @@
 	; Trigger list file
 	cfg_trigger_list = cfg_output + 'trigger_list.txt'
 
-        ; Detectors to use (currently rears only)
-        cfg_a2d_index_mask = [bytarr(9),bytarr(18)+1]
+    ; Detectors to use (currently rears only)
+    cfg_a2d_index_mask = [bytarr(9),bytarr(18)+1]
 
-        ; Threshold on channels 
-        cfg_threshchans = [dblarr(18)+150.d,dblarr(9)]
+    ; Threshold on channels 
+    cfg_threshchans = [dblarr(18)+150.d,dblarr(9)]
 
 ; STAGE 1 SETTINGS
 	; Days back to begin looking.
@@ -52,13 +52,7 @@
 	;    allowed for events on the 0.3ms timescale to pass Stage 1.
 	
 
-	;cfg1_max_probabilities = [2.0e-10, 1.0e-9, 1.22e-7, 1.1e-7, 9.0e-7, 2e-6, 8.8e-7]     ; STRICT 
-	
-	; The previous threshold array was used 07/28/2015 Vetofinder but we had three GNU events not show up.
-	; The only ones that did not survive look like 30ms bins. All their events have different probabilities
-	; than ours because they use a different mechanism for their mean. 
-
-	cfg1_max_probabilities = [2.0e-10, 1.0e-9, 1.22e-7, 1.1e-6, 9.0e-7, 2e-6, 8.8e-7] 
+	cfg1_max_probabilities = [2.0e-10, 1.0e-9, 1.22e-7, 1.1e-7, 9.0e-7, 2e-6, 8.8e-7]     ; STRICT 
 
 	; cfg1_max_probabilities = [1.0e-9, 1.0e-8, 1.0e-6, 1.1e-6, 9.e-6, 2e-5, 8.8e-6] ; LOOSE
 

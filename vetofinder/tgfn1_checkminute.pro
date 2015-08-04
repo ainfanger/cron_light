@@ -74,7 +74,17 @@ pro tgfn1_checkminute, minute, return_val
 ; Alex: Also, we won't put a threshold on the low_voltage rear
 ; channels (18-27). 
 
-    whall = where (d.channel gt cfg_threshchans[d.a2d_index],nall)
+
+;;    08/04/2015 - Infanger
+;; This is the Gjesteland method for cutting counts: kev_energy. 
+;; kev_energy = findgen(n_elements(d))
+;; params = hsi_get_e_edges(gain_time_wanted = string(anytim(minute,/atime)), $
+;;                             /coeff_only)
+;;  kev_energy =  d.channel*params[d.a2d_index, 1] + params[d.a2d_index, 0]
+;;  whall = where(kev_energy gt 30.0d, nall)
+
+
+whall = where (d.channel gt cfg_threshchans[d.a2d_index],nall)
 
         
     IF nall eq 0 THEN BEGIN
@@ -86,7 +96,7 @@ pro tgfn1_checkminute, minute, return_val
 
 	eventlist = realtime_all[whall] ; Actual times
 	detectorlist = d[whall].a2d_index ; Detectors of items
-	uall = uniq(d[whall].time/4) ; Find unique ones
+	uall = uniq(d[whall].time/4,sort(d[whall].time/4)) ; Find unique ones (RHESSI binary microsecond sensitivity)
 	eventlist = eventlist[uall] ; Limit to uniques
 	detectorlist = detectorlist[uall] ; Limit to uniques
 

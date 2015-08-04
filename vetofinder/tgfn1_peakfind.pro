@@ -52,6 +52,13 @@ pro tgfn1_peakfind, minute, timescale_index, eventlist, detectorlist, offset = o
 	ave_index = max([round(250*ave), 1])
 	probabilities = poissontable[ave_index, hist]
 	peaks = where(probabilities lt max_prob AND hist gt ave, num_peaks)
+;Debug: see how we missed some Bergen due to Poisson. 
+
+	IF timescale_index eq 3 THEN BEGIN
+		loadct,13
+		;; GENERALIZE THIS!!!!
+		debug_poisson, '26-May-11 20:35:10.934',event_times, hist,probabilities,timescale_index
+	ENDIF
   
 ; Cycle through any items with a small probability.
 	FOR i = 0L, num_peaks-1 DO BEGIN

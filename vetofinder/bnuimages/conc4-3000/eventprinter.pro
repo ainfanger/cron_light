@@ -6,6 +6,6 @@ pro eventprinter
 	veto=veto[uniqueindex]
 	stop
 	FOR i=0,n_elements(veto)-1 DO BEGIN
-		closeup_fr,times1[i],3,title=veto[i],/postscript,filenameflag=veto[i]
+		closeup_fr,times1[i],3,title=veto[i],/postscript,filenameflag=veto[i],/nofront
 	ENDFOR 
 END
