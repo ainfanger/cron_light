@@ -1,131 +1,54 @@
-02-Jan-11 04:12:58.621 !  2 ! Concentration veto: 0.583333
-02-Jan-11 04:12:58.621 !  2 ! Concentration veto: 0.500000
-02-Jan-11 04:12:58.621 !  3 ! Event found
-02-Jan-11 04:12:58.621 !  3 ! Concentration veto: 0.437500
-11-Jan-11 13:32:43.749 !  1 ! Event found
-11-Jan-11 13:32:43.749 !  2 ! Event found
-11-Jan-11 13:32:43.749 !  2 ! Event found
-11-Jan-11 13:32:43.749 !  3 ! Event found
-11-Jan-11 13:32:43.749 !  3 ! Event found
-11-Jan-11 13:32:43.749 !  2 ! Event found
-11-Jan-11 13:32:43.749 !  2 ! Event found
-11-Jan-11 13:32:43.749 !  3 ! Event found
-11-Jan-11 13:32:43.749 !  3 ! Event found
-17-Jan-11 12:18:05.505 !  2 ! Event found
-17-Jan-11 12:18:05.505 !  3 ! Event found
-13-Feb-11 09:31:16.638 !  2 ! Concentration veto: 0.545455
-13-Feb-11 09:31:16.638 !  3 ! Concentration veto: 0.526316
-13-Feb-11 09:31:16.638 !  4 ! Event found
-13-Feb-11 09:31:16.638 !  4 ! Event found
-27-Feb-11 19:21:56.113 !  1 ! Concentration veto: 0.500000
-27-Feb-11 19:21:56.113 !  2 ! Concentration veto: 0.545455
-27-Feb-11 19:21:56.113 !  3 ! Event found
-10-Mar-11 08:56:27.215 !  0 ! Event found
-10-Mar-11 08:56:27.215 !  1 ! Event found
-10-Mar-11 08:56:27.215 !  1 ! Event found
-10-Mar-11 08:56:27.215 !  2 ! Event found
-10-Mar-11 08:56:27.215 !  2 ! Event found
-10-Mar-11 08:56:27.215 !  3 ! Event found
-10-Mar-11 08:56:27.215 !  4 ! Event found
-11-Mar-11 11:54:36.724 !  0 ! Event found
-11-Mar-11 11:54:36.724 !  0 ! Event found
-11-Mar-11 11:54:36.724 !  0 ! Event found
-11-Mar-11 11:54:36.724 !  0 ! Event found
-11-Mar-11 11:54:36.724 !  1 ! Event found
-11-Mar-11 11:54:36.724 !  1 ! Event found
-11-Mar-11 11:54:36.724 !  1 ! Event found
-11-Mar-11 11:54:36.724 !  2 ! Event found
-11-Mar-11 11:54:36.724 !  2 ! Event found
-11-Mar-11 11:54:36.724 !  3 ! Event found
-11-Mar-11 11:54:36.724 !  3 ! Event found
-11-Mar-11 11:54:36.724 !  4 ! Event found
-11-Mar-11 11:54:36.724 !  4 ! Event found
-27-Mar-11 06:31:01.479 !  1 ! Concentration veto: 0.600000
-27-Mar-11 06:31:01.479 !  2 ! Concentration veto: 0.500000
-27-Mar-11 06:31:01.479 !  2 ! Concentration veto: 0.461538
-27-Mar-11 06:31:01.479 !  3 ! Event found
-27-Mar-11 06:31:01.479 !  3 ! Event found
-31-Mar-11 00:47:26.346 !  2 ! Concentration veto: 0.454545
-15-May-11 11:16:58.486 !  1 ! Event found
-15-May-11 11:16:58.486 !  1 ! Event found
-15-May-11 11:16:58.486 !  1 ! Event found
-15-May-11 11:16:58.486 !  2 ! Event found
-15-May-11 11:16:58.486 !  2 ! Event found
-15-May-11 11:16:58.486 !  2 ! Event found
-15-May-11 11:16:58.486 !  3 ! Event found
-15-May-11 11:16:58.486 !  3 ! Event found
-15-May-11 11:16:58.486 !  3 ! Event found
-15-May-11 11:16:58.486 !  4 ! Event found
-15-May-11 11:16:58.486 !  4 ! Event found
-19-May-11 23:32:01.135 ! -1 ! Poisson
-21-May-11 03:12:15.676 ! -1 ! Poisson
-26-May-11 20:35:10.934 ! -1 ! Poisson
-03-Jun-11 11:52:35.897 !  0 ! Event found
-03-Jun-11 11:52:35.897 !  1 ! Event found
-03-Jun-11 11:52:35.897 !  2 ! Event found
-21-Aug-11 04:29:35.465 !  0 ! Concentration veto: 0.555556
-21-Aug-11 04:29:35.465 !  0 ! Concentration veto: 0.555556
-21-Aug-11 04:29:35.465 !  1 ! Concentration veto: 0.555556
-21-Aug-11 04:29:35.465 !  2 ! Event found
-21-Aug-11 04:29:35.465 !  2 ! Event found
-21-Aug-11 04:29:35.465 !  3 ! Event found
-21-Aug-11 04:29:35.465 !  3 ! Event found
-21-Aug-11 22:50:33.291 !  2 ! Event found
-21-Aug-11 22:50:33.291 !  2 ! Event found
-21-Aug-11 22:50:33.291 !  3 ! Event found
-21-Aug-11 22:50:33.291 !  3 ! Event found
-21-Aug-11 22:50:33.291 !  4 ! Event found
-10-Sep-11 12:21:27.910 !  2 ! Concentration veto: 0.600000
-10-Sep-11 12:21:27.910 !  2 ! Concentration veto: 0.600000
-10-Sep-11 12:21:27.910 !  3 ! Concentration veto: 0.500000
-10-Sep-11 18:00:51.627 !  0 ! Event found
-10-Sep-11 18:00:51.627 !  0 ! Event found
-10-Sep-11 18:00:51.627 !  1 ! Event found
-10-Sep-11 18:00:51.627 !  1 ! Event found
-10-Sep-11 18:00:51.627 !  2 ! Event found
-10-Sep-11 18:00:51.627 !  2 ! Event found
-10-Sep-11 18:00:51.627 !  3 ! Event found
-10-Sep-11 18:00:51.627 !  3 ! Event found
-10-Sep-11 18:00:51.627 !  4 ! Event found
-10-Sep-11 18:00:51.627 !  4 ! Event found
-10-Sep-11 18:00:51.627 !  5 ! Event found
-10-Sep-11 18:00:51.627 !  5 ! Event found
-28-Sep-11 04:55:14.320 !  2 ! Concentration veto: 0.571429
-28-Sep-11 04:55:14.320 !  2 ! Concentration veto: 0.571429
-28-Sep-11 04:55:14.320 !  3 ! Concentration veto: 0.500000
-06-Oct-11 03:48:46.609 !  2 ! Concentration veto: 0.444444
-06-Oct-11 03:48:46.609 !  2 ! Concentration veto: 0.444444
-06-Oct-11 03:48:46.609 !  3 ! Event found
-09-Oct-11 18:27:57.081 !  0 ! Event found
-09-Oct-11 18:27:57.081 !  1 ! Event found
-09-Oct-11 18:27:57.081 !  1 ! Event found
-09-Oct-11 18:27:57.081 !  2 ! Event found
-09-Oct-11 18:27:57.081 !  2 ! Event found
-09-Oct-11 18:27:57.081 !  3 ! Event found
-09-Oct-11 18:27:57.081 !  3 ! Event found
-09-Oct-11 18:27:57.081 !  4 ! Event found
-09-Oct-11 18:27:57.081 !  4 ! Event found
-31-Oct-11 20:02:14.623 !  2 ! Event found
-31-Oct-11 20:02:14.623 !  3 ! Event found
-03-Nov-11 19:46:24.058 !  1 ! Event found
-03-Nov-11 19:46:24.058 !  2 ! Event found
-03-Nov-11 19:46:24.058 !  2 ! Event found
-03-Nov-11 19:46:24.058 !  3 ! Event found
-03-Nov-11 19:46:24.058 !  3 ! Event found
-03-Nov-11 19:46:24.058 !  4 ! Event found
-03-Nov-11 19:46:24.058 !  4 ! Event found
-04-Nov-11 07:54:52.210 !  0 ! Event found
-04-Nov-11 07:54:52.210 !  0 ! Event found
-04-Nov-11 07:54:52.210 !  1 ! Event found
-04-Nov-11 07:54:52.210 !  2 ! Event found
-04-Nov-11 07:54:52.210 !  2 ! Event found
-04-Nov-11 07:54:52.210 !  2 ! Event found
-04-Nov-11 07:54:52.210 !  3 ! Event found
-04-Nov-11 07:54:52.210 !  3 ! Event found
-04-Nov-11 07:54:52.210 !  4 ! Event found
-04-Nov-11 07:54:52.210 !  4 ! Event found
-16-Jan-12 07:31:21.750 !  2 ! Event found
-16-Jan-12 07:31:21.750 !  3 ! Event found
-16-Jan-12 07:31:21.750 !  3 ! Event found
-16-Jan-12 07:31:21.750 !  4 ! Event found
-16-Jan-12 07:31:21.750 !  5 ! Event found
+2010-06-03 05:02:13.956 !  2 ! Concentration veto: 0.700000
+2010-06-03 05:02:13.956 !  3 ! Concentration veto: 0.571429
+2010-06-03 05:02:13.956 !  2 ! Concentration veto: 0.700000
+2010-06-03 05:02:13.956 !  3 ! Concentration veto: 0.571429
+2010-06-03 05:02:13.956 !  2 ! Concentration veto: 0.700000
+2010-06-03 05:02:13.956 !  3 ! Concentration veto: 0.571429
+2010-10-30 00:39:44.019 ! -1 ! Poisson
+2010-11-16 21:55:21.528 !  1 ! Concentration veto: 0.400000
+2010-11-16 21:55:21.528 !  2 ! Concentration veto: 0.333333
+2010-11-16 21:55:21.528 !  2 ! Concentration veto: 0.363636
+2010-11-16 21:55:21.528 !  1 ! Concentration veto: 0.400000
+2010-11-16 21:55:21.528 !  2 ! Concentration veto: 0.333333
+2010-11-16 21:55:21.528 !  2 ! Concentration veto: 0.363636
+2010-11-16 21:55:21.528 !  1 ! Concentration veto: 0.400000
+2010-11-16 21:55:21.528 !  2 ! Concentration veto: 0.333333
+2010-11-16 21:55:21.528 !  2 ! Concentration veto: 0.363636
+2010-12-01 13:10:27.249 ! -1 ! Poisson
+2011-02-26 22:06:21.682 !  2 ! Concentration veto: 0.500000
+2011-02-26 22:06:21.682 !  5 ! Event found
+2011-02-26 22:06:21.682 !  2 ! Concentration veto: 0.500000
+2011-02-26 22:06:21.682 !  5 ! Event found
+2011-02-26 22:06:21.682 !  2 ! Concentration veto: 0.500000
+2011-02-26 22:06:21.682 !  5 ! Event found
+2011-03-27 06:31:01.479 !  1 ! Concentration veto: 0.600000
+2011-03-27 06:31:01.479 !  2 ! Concentration veto: 0.500000
+2011-03-27 06:31:01.479 !  2 ! Concentration veto: 0.461538
+2011-03-27 06:31:01.479 !  3 ! Concentration veto: 0.400000
+2011-03-27 06:31:01.479 !  1 ! Concentration veto: 0.600000
+2011-03-27 06:31:01.479 !  2 ! Concentration veto: 0.500000
+2011-03-27 06:31:01.479 !  2 ! Concentration veto: 0.461538
+2011-03-27 06:31:01.479 !  3 ! Concentration veto: 0.400000
+2011-03-27 06:31:01.479 !  1 ! Concentration veto: 0.600000
+2011-03-27 06:31:01.479 !  2 ! Concentration veto: 0.500000
+2011-03-27 06:31:01.479 !  2 ! Concentration veto: 0.461538
+2011-03-27 06:31:01.479 !  3 ! Concentration veto: 0.400000
+2011-04-04 00:54:53.378 ! -1 ! Poisson
+2011-05-07 02:11:51.679 !  2 ! Concentration veto: 0.500000
+2011-05-07 02:11:51.679 !  2 ! Concentration veto: 0.500000
+2011-05-07 02:11:51.679 !  2 ! Concentration veto: 0.500000
+2011-08-21 22:50:33.291 !  2 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  2 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  3 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  3 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  4 ! Event found
+2011-08-21 22:50:33.291 !  2 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  2 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  3 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  3 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  4 ! Event found
+2011-08-21 22:50:33.291 !  2 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  2 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  3 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  3 ! Concentration veto: 0.333333
+2011-08-21 22:50:33.291 !  4 ! Event found

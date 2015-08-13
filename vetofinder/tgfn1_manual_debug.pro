@@ -6,7 +6,7 @@
 ; Outputs a structure of triggers to manual/ directory in Stage 1 output with a timestamp
 
 
-pro tgfn1_manual, start, stop
+pro tgfn1_manual_debug, start, stop,offopt=offopt,debug_poisson_date=debug_poisson_date,debug_poisson_index=debug_poisson_index
 
 
 	; Load config file
@@ -17,23 +17,20 @@ pro tgfn1_manual, start, stop
 	common poisson, poissontable
 	common objects, obssum, obstref, o
 	o = hsi_eventlist()
-	restore, 'tgfn1_poissontable.sav'
+	restore, '~/ainfanger/tgf/programs/Data/PoissonTables/tgfn1_poissontable.sav'
 	trigger_structures = [stage1_struct]
 
 	start_timestamp = anytim(start)
 	stop_timestamp = anytim(stop)
 	FOR i = start_timestamp, stop_timestamp, 60L DO BEGIN
-		tgfn1_checkminute, i, return_val
+		tgfn1_checkminute, i, return_val, debug_poisson_date=debug_poisson_date,debug_poisson_index=debug_poisson_index
 	ENDFOR
         ;IF n_elements(trigger_structures eq 0) THEN BEGIN
         ;   print, 'nothing found.'
         ;ENDIF
         
-        if n_elements(trigger_structures eq 1) then begin
-           print, 'Only one triggerstructure?'
-           return
-        endif
-
+        
+    if keyword_set(offopt) then return 
 
         ; Trim list and get lat/lons
 	trigger_structures = trigger_structures[1:*]
