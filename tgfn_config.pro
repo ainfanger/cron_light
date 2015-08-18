@@ -11,7 +11,7 @@
   	cfg_timescales = [0.06, 0.1, 0.3, 1.0, 3.0, 10.0, 30.0]
 
 	; Output directory
-	cfg_output = './output/'
+	cfg_output = './output/interanneal/'
 
 	; Logging. Set to 1 to enable logging to file/screen
 	cfg_log_to_file = 1
@@ -20,6 +20,11 @@
 	; Trigger list file
 	cfg_trigger_list = cfg_output + 'trigger_list.txt'
 
+        ; Detectors to use (currently rears only)
+        cfg_a2d_index_mask = [bytarr(9),bytarr(18)+1]
+
+        ; Threshold on channels 
+        cfg_threshchans = [dblarr(18)+150.d,dblarr(9)]
 
 ; STAGE 1 SETTINGS
 	; Days back to begin looking.
@@ -38,8 +43,9 @@
 		latitude: 0.d, $		; Lat
 		longitude: 0.d $		; Long
 	}
-
-
+    
+    ; Concentration Paramter
+    cfg1_concentration = .33333d
 
 	; Poisson probabilities -- each event must be below this probability to make the list.
 	;    These were adjusted so that ~100 events per day pass. These are ordered the same as
@@ -52,6 +58,7 @@
 	cfg1_max_particle_rate = 10
 
 
+
 ; STAGE 2 SETTINGS
 
 	; Output directory for events
@@ -60,7 +67,7 @@
 	; Log file
 	cfg2_log_file = cfg_output + 'stage2_log.txt'
 
-	; Amoutn of data surrounding event to select
+	; Amount of data surrounding event to select
 	cfg2_datawindow = 2.15d
 
 	; THRESHOLDS

@@ -17,7 +17,7 @@ pro tgfn1_manual, start, stop
 	common poisson, poissontable
 	common objects, obssum, obstref, o
 	o = hsi_eventlist()
-	restore, '~/ainfanger/tgf/programs/tgfn1_poissontable.sav'
+	restore, '~/ainfanger/tgf/programs/Data/PoissonTables/tgfn1_poissontable.sav'
 	trigger_structures = [stage1_struct]
 
 	start_timestamp = anytim(start)
@@ -26,19 +26,13 @@ pro tgfn1_manual, start, stop
 		tgfn1_checkminute, i, return_val
 	ENDFOR
 
-        if n_elements(trigger_structures eq 1) then begin
-           print, 'No elements in given time range.'
-           return
-        endif
-
-
         ; Trim list and get lat/lons
 	trigger_structures = trigger_structures[1:*]
 	tgfn1_latlons
 
 	; Output
 	basename = strmid(anytim(start_timestamp, /ccsds), 0, 10) + '_' + strmid(anytim(stop_timestamp, /ccsds), 0, 10)
-	fullname = cfg_output + 'manual/' + strmid(anytim(start_timestamp, /ccsds), 0, 10) + '_' + strmid(anytim(stop_timestamp, /ccsds), 0, 10)
+	fullname = cfg_output + 'manual/' + strmid(anytim(start_timestamp,/ccsds), 0, 10) + '_' + strmid(anytim(stop_timestamp,/ccsds), 0, 10)
 	save, filename=fullname + '.sav', start, stop, trigger_structures
 
 	; Write to trigger_list file
